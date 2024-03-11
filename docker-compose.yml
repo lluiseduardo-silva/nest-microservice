@@ -1,0 +1,28 @@
+version: '3'
+services:
+  costumers:
+    build:
+      context: .
+      dockerfile: ./apps/costumers/Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: AwesomePassword
+      DB_NAME: micro
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=micro
+      - POSTGRES_PASSWORD=AwesomePassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
